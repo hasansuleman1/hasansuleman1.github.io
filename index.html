@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hasan Syed — Graphics & XR Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #141414;
+      --surface2: #1a1a1a;
+      --border: #2a2a2a;
+      --accent: #c8f060;
+      --accent2: #60c8f0;
+      --text: #e8e8e0;
+      --text-muted: #666;
+      --text-dim: #999;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(200,240,96,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 1.05;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 460px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.75rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0d0d0d;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: #d4f472;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--accent); }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      padding: 6rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── SKILLS STRIP ── */
+    .skills-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 3rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .skills-scroll {
+      display: flex;
+      gap: 3rem;
+      animation: scroll-left 30s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .skill-pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .skill-pill span {
+      color: var(--accent);
+      margin-right: 0.5rem;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      gap: 2px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      transition: border-color 0.3s;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-card:hover { border-color: rgba(200,240,96,0.3); }
+
+    .project-card.reverse { grid-template-columns: 1.2fr 1fr; }
+    .project-card.reverse .project-media { order: 2; }
+    .project-card.reverse .project-info { order: 1; }
+
+    .project-media {
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+      background: var(--surface2);
+    }
+
+    .project-media img,
+    .project-media iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-media iframe {
+      position: absolute;
+      inset: 0;
+      border: none;
+    }
+
+    .placeholder-media {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, #141414 0%, #1e1e1e 100%);
+      min-height: 320px;
+    }
+
+    .placeholder-icon {
+      width: 64px;
+      height: 64px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+    }
+
+    .placeholder-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    .placeholder-text strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .project-info {
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .project-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .project-tag.highlight {
+      border-color: rgba(200,240,96,0.4);
+      color: var(--accent);
+      background: rgba(200,240,96,0.05);
+    }
+
+    .project-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .project-desc {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tech {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tech-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--accent2);
+      background: rgba(96,200,240,0.08);
+      border: 1px solid rgba(96,200,240,0.15);
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    /* ── EXPERIENCE ── */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+
+    .exp-left {
+      padding-right: 2rem;
+    }
+
+    .exp-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-company {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .exp-right {}
+
+    .exp-role {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .exp-bullets li {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+
+    /* ── CERTIFICATIONS ── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .cert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      border-radius: 4px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .cert-card:hover {
+      border-color: rgba(200,240,96,0.3);
+      transform: translateY(-2px);
+    }
+
+    .cert-issuer {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .cert-name {
+      font-size: 0.875rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .contact-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-heading em { font-style: italic; color: var(--accent); }
+
+    .contact-sub {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .contact-link-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(200,240,96,0.1);
+      border: 1px solid rgba(200,240,96,0.2);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-link-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-link-value {
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      section { padding: 4rem 1.5rem; }
+      .project-card,
+      .project-card.reverse { grid-template-columns: 1fr; }
+      .project-card.reverse .project-media { order: 0; }
+      .project-card.reverse .project-info { order: 0; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .certs-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Hasan Syed</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-tag">Graphics &amp; XR Engineer</div>
+      <h1>Hasan<br><em>Syed</em></h1>
+      <p class="hero-desc">
+        10+ years building real-time rendering systems, XR experiences, and performance-critical graphics pipelines across game studios and XR platforms. NVIDIA DLI certified in CUDA C++.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">65%</div>
+        <div class="stat-label">Frame-rate Improvement</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">75%</div>
+        <div class="stat-label">Render Time Reduction</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">50%</div>
+        <div class="stat-label">Draw Call Reduction</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS STRIP -->
+  <div class="skills-strip">
+    <div class="skills-scroll">
+      <span class="skill-pill"><span>▸</span>C++</span>
+      <span class="skill-pill"><span>▸</span>HLSL / GLSL</span>
+      <span class="skill-pill"><span>▸</span>Unity URP</span>
+      <span class="skill-pill"><span>▸</span>Unreal Engine</span>
+      <span class="skill-pill"><span>▸</span>OpenXR</span>
+      <span class="skill-pill"><span>▸</span>Metal / Vulkan</span>
+      <span class="skill-pill"><span>▸</span>CUDA C++</span>
+      <span class="skill-pill"><span>▸</span>RenderDoc</span>
+      <span class="skill-pill"><span>▸</span>Unreal Insights</span>
+      <span class="skill-pill"><span>▸</span>C#</span>
+      <span class="skill-pill"><span>▸</span>Python</span>
+      <span class="skill-pill"><span>▸</span>Unity Job System</span>
+      <span class="skill-pill"><span>▸</span>Burst Compiler</span>
+      <span class="skill-pill"><span>▸</span>Maya</span>
+      <span class="skill-pill"><span>▸</span>AR / VR</span>
+      <!-- duplicate for seamless loop -->
+      <span class="skill-pill"><span>▸</span>C++</span>
+      <span class="skill-pill"><span>▸</span>HLSL / GLSL</span>
+      <span class="skill-pill"><span>▸</span>Unity URP</span>
+      <span class="skill-pill"><span>▸</span>Unreal Engine</span>
+      <span class="skill-pill"><span>▸</span>OpenXR</span>
+      <span class="skill-pill"><span>▸</span>Metal / Vulkan</span>
+      <span class="skill-pill"><span>▸</span>CUDA C++</span>
+      <span class="skill-pill"><span>▸</span>RenderDoc</span>
+      <span class="skill-pill"><span>▸</span>Unreal Insights</span>
+      <span class="skill-pill"><span>▸</span>C#</span>
+      <span class="skill-pill"><span>▸</span>Python</span>
+      <span class="skill-pill"><span>▸</span>Unity Job System</span>
+      <span class="skill-pill"><span>▸</span>Burst Compiler</span>
+      <span class="skill-pill"><span>▸</span>Maya</span>
+      <span class="skill-pill"><span>▸</span>AR / VR</span>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header fade-in">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- Matrix Shader -->
+    <div class="project-card fade-in">
+      <div class="project-media">
+        <!-- PLACEHOLDER: Replace the src below with your YouTube embed URL -->
+        <!-- Example: src="https://www.youtube.com/embed/YOUR_VIDEO_ID" -->
+        <div class="placeholder-media">
+          <div class="placeholder-icon">▶</div>
+          <div class="placeholder-text">
+            <strong>Video Placeholder</strong>
+            Replace with YouTube embed URL
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-meta">
+          <span class="project-tag highlight">Shader</span>
+          <span class="project-tag">Kabam Inc.</span>
+          <span class="project-tag">Non-Published</span>
+        </div>
+        <h3 class="project-title">The Matrix Shader</h3>
+        <p class="project-desc">
+          A real-time shader using two texture lookups — one for Matrix-style symbols and one for RG noise to randomize symbol selection. Features include scrolling speed control, symbol randomization rate, and highlight color. Integrated with Kabam's in-house event trigger system to apply and remove the effect dynamically per-character.
+        </p>
+        <div class="project-tech">
+          <span class="tech-badge">HLSL</span>
+          <span class="tech-badge">Unity</span>
+          <span class="tech-badge">C#</span>
+          <span class="tech-badge">Texture Sampling</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kabam Game Jam -->
+    <div class="project-card reverse fade-in">
+      <div class="project-media">
+        <!-- PLACEHOLDER: Replace with your screenshot image -->
+        <!-- Example: <img src="images/marvel-puzzle-realm.jpg" alt="Marvel Puzzle Realm"> -->
+        <div class="placeholder-media">
+          <div class="placeholder-icon">🖼</div>
+          <div class="placeholder-text">
+            <strong>Image Placeholder</strong>
+            Replace with screenshot
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-meta">
+          <span class="project-tag highlight">Game Jam</span>
+          <span class="project-tag">Kabam — 2019</span>
+          <span class="project-tag">Lead Programmer</span>
+        </div>
+        <h3 class="project-title">Marvel Puzzle Realm</h3>
+        <p class="project-desc">
+          Created during a competitive internal game jam at Kabam in 2019. Took the lead programming role as the sole developer on the team. The project showcased rapid prototyping skills and the ability to deliver a complete gameplay experience under time pressure.
+        </p>
+        <div class="project-tech">
+          <span class="tech-badge">Unity</span>
+          <span class="tech-badge">C#</span>
+          <span class="tech-badge">Gameplay Systems</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EA Game Jam -->
+    <div class="project-card fade-in">
+      <div class="project-media">
+        <!-- PLACEHOLDER: Replace with your screenshot image -->
+        <!-- Example: <img src="images/out-of-reach.jpg" alt="Out Of Reach"> -->
+        <div class="placeholder-media">
+          <div class="placeholder-icon">🖼</div>
+          <div class="placeholder-text">
+            <strong>Image Placeholder</strong>
+            Replace with screenshot
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-meta">
+          <span class="project-tag highlight">Game Jam</span>
+          <span class="project-tag">EA — 2016</span>
+          <span class="project-tag">Programmer</span>
+        </div>
+        <h3 class="project-title">Out Of Reach</h3>
+        <p class="project-desc">
+          Built during an internal EA game jam in 2016 with a 3-person team — one artist and two programmers. This was my first game jam and remains one of the most rewarding projects I've worked on, delivering a complete experience collaboratively in a compressed timeframe.
+        </p>
+        <div class="project-tech">
+          <span class="tech-badge">Unity</span>
+          <span class="tech-badge">C#</span>
+          <span class="tech-badge">AR/VR Prototype</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" style="background: var(--surface); max-width: 100%; padding: 6rem 0;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 3rem;">
+      <div class="section-header fade-in">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Experience</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="experience-list">
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-period">Jun 2025 – Dec 2025</div>
+            <div class="exp-company">Meta Platforms</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-role">Technical Artist — AR &amp; VR</div>
+            <ul class="exp-bullets">
+              <li>Implemented C++ profiling hooks in the OpenXR runtime pipeline to identify CPU/GPU bottlenecks, improving frame pacing across VR Home Apps</li>
+              <li>Extended Unreal Engine tooling with C++, Python, and Blueprint to streamline asset validation for large content drops</li>
+              <li>Built a Halloween-themed Home App and C++-backed tools for art teams to configure seasonal environments</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-period">Apr 2023 – Dec 2024</div>
+            <div class="exp-company">Starform Inc.</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-role">Software Engineer — Graphics</div>
+            <ul class="exp-bullets">
+              <li>Led graphics migration to Unity's URP using C#, Kotlin, and HLSL, enabling cross-platform scalability</li>
+              <li>Improved game frame-rate by ~65% by identifying highest rendering costs and guiding art team cleanup</li>
+              <li>Created guidelines for terrain splat painting and topology optimization for large environments</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-period">Jul 2018 – Apr 2023</div>
+            <div class="exp-company">Kabam Inc.</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-role">Software Engineer — Rendering</div>
+            <ul class="exp-bullets">
+              <li>Optimized Beams and Trails system, reducing render time by 75% via texture atlasing and Jobs/Burst compiler</li>
+              <li>Created rendering profiler tools in C# to track particle systems and draw-calls by department budgets</li>
+              <li>Delivered a real-time water system with vertex movement and tessellation using C# and HLSL</li>
+              <li>Prototyped XR features using OpenXR to evaluate cross-platform rendering workflows</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-period">Jul 2017 – Jul 2018</div>
+            <div class="exp-company">Atomic Cartoons</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-role">Software Engineer — Pipeline Technical Director</div>
+            <ul class="exp-bullets">
+              <li>Designed automation frameworks in Python for studio-wide content pipelines</li>
+              <li>Enhanced Scene-Browser for animators with context swaps and granular version control</li>
+              <li>Created publishing system for animation compositing in Nuke using Shotgun Python API</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-period">Jun 2016 – Jun 2017</div>
+            <div class="exp-company">Electronic Arts</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-role">Software Engineer — Technical Artist</div>
+            <ul class="exp-bullets">
+              <li>Built graphics automation frameworks in C# for content publishing and validation</li>
+              <li>Enhanced Maya shader integration by dynamically sourcing textures and material data from the game engine</li>
+              <li>Prototyped Unity-based AR/VR gameplay systems during internal game jams</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-header fade-in">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Certifications</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">NVIDIA Deep Learning Institute</div>
+        <div class="cert-name">Fundamentals of Accelerated Computing with Modern CUDA C/C++</div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">NVIDIA Deep Learning Institute</div>
+        <div class="cert-name">Accelerating CUDA C++ Applications with Concurrent Streams</div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">NVIDIA Deep Learning Institute</div>
+        <div class="cert-name">Scaling Workloads Across Multiple GPUs with CUDA C++</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div>
+        <h2 class="contact-heading">Let's build something <em>great</em> together.</h2>
+        <p class="contact-sub">Open to graphics engineering, XR development, and rendering roles. Based in Seattle, WA — Canadian citizen on TN Visa.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:hasansuleman1@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-value">hasansuleman1@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://github.com/hasansuleman1" target="_blank" class="contact-link">
+          <div class="contact-link-icon">⌥</div>
+          <div>
+            <div class="contact-link-label">GitHub</div>
+            <div class="contact-link-value">github.com/hasansuleman1</div>
+          </div>
+        </a>
+        <!-- PLACEHOLDER: Add your LinkedIn URL below -->
+        <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          <div>
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-value">Update with your LinkedIn URL</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Hasan Syed</p>
+    <p>Graphics & XR Engineer — Seattle, WA</p>
+  </footer>
+
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
