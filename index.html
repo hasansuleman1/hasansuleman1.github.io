@@ -8,15 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d0d0d;
-      --surface: #141414;
-      --surface2: #1a1a1a;
-      --border: #2a2a2a;
+      --bg: #292929;
+      --surface: #242d20;
+      --surface2: #484f58;
+      --border: #596b2d;
       --accent: #c8f060;
       --accent2: #60c8f0;
-      --text: #e8e8e0;
-      --text-muted: #666;
-      --text-dim: #999;
+      --text: #e7e7e7;
+      --text-muted: #a4a4a4;
+      --text-dim: #bfbfbf;
+      --text-link: #c8f060;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -778,51 +779,67 @@
       <div class="section-line"></div>
     </div>
 
-    <!-- Matrix Shader -->
-    <div class="project-card fade-in">
-      <div class="project-media">
-        <!-- PLACEHOLDER: Replace the src below with your YouTube embed URL -->
-        <!-- Example: src="https://www.youtube.com/embed/YOUR_VIDEO_ID" -->
-        <div class="placeholder-media">
-          <div class="placeholder-icon">▶</div>
-          <div class="placeholder-text">
-            <strong>Video Placeholder</strong>
-            Replace with YouTube embed URL
-          </div>
-        </div>
+  <!-- Matrix Shader -->
+  <div class="project-card fade-in">
+    <div class="project-media">
+      <a href="https://youtu.be/3PAF6ymUftg" target="_blank" style="position: relative; display: flex; align-items: center; justify-content: center; height: 100%; text-decoration: none;">
+        <img
+          src="https://img.youtube.com/vi/3PAF6ymUftg/maxresdefault.jpg"
+          alt="Matrix Shader"
+          style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;"
+        />
+        <div style="
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 3rem;
+          color: white;
+          background: rgba(0, 0, 0, 0.4);
+        ">▶</div>
+      </a>
+    </div>
+    <div class="project-info">
+      <div class="project-meta">
+        <span class="project-tag highlight">Shader</span>
+        <span class="project-tag">Kabam Inc.</span>
+        <span class="project-tag">Non-Published</span>
       </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-tag highlight">Shader</span>
-          <span class="project-tag">Kabam Inc.</span>
-          <span class="project-tag">Non-Published</span>
-        </div>
-        <h3 class="project-title">The Matrix Shader</h3>
-        <p class="project-desc">
-          A real-time shader using two texture lookups — one for Matrix-style symbols and one for RG noise to randomize symbol selection. Features include scrolling speed control, symbol randomization rate, and highlight color. Integrated with Kabam's in-house event trigger system to apply and remove the effect dynamically per-character.
-        </p>
-        <div class="project-tech">
-          <span class="tech-badge">HLSL</span>
-          <span class="tech-badge">Unity</span>
-          <span class="tech-badge">C#</span>
-          <span class="tech-badge">Texture Sampling</span>
-        </div>
+      <h3 class="project-title">The Matrix Shader</h3>
+      <p class="project-desc">
+        A real-time shader using two texture lookups — one for Matrix-style symbols and one for RG noise to randomize symbol selection. Features include scrolling speed control, symbol randomization rate, and highlight color. Integrated with Kabam's in-house event trigger system to apply and remove the effect dynamically per-character.
+      </p>
+      <div class="project-tech">
+        <span class="tech-badge">HLSL</span>
+        <span class="tech-badge">Unity</span>
+        <span class="tech-badge">C#</span>
+        <span class="tech-badge">Texture Sampling</span>
       </div>
     </div>
+  </div>
 
     <!-- Kabam Game Jam -->
     <div class="project-card reverse fade-in">
-      <div class="project-media">
-        <!-- PLACEHOLDER: Replace with your screenshot image -->
-        <!-- Example: <img src="images/marvel-puzzle-realm.jpg" alt="Marvel Puzzle Realm"> -->
-        <div class="placeholder-media">
-          <div class="placeholder-icon">🖼</div>
-          <div class="placeholder-text">
-            <strong>Image Placeholder</strong>
-            Replace with screenshot
-          </div>
-        </div>
-      </div>
+         <div class="project-media">
+          <a href="https://youtu.be/Wyd955TGvXw" target="_blank" style="position: relative; display: flex; align-items: center; justify-content: center; height: 100%; text-decoration: none;">
+            <img
+              src="https://img.youtube.com/vi/Wyd955TGvXw/maxresdefault.jpg"
+              alt="Matrix Shader"
+              style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;"
+            />
+            <div style="
+              position: absolute;
+              inset: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 3rem;
+              color: white;
+              background: rgba(0, 0, 0, 0.4);
+            ">▶</div>
+          </a>
+    </div>
       <div class="project-info">
         <div class="project-meta">
           <span class="project-tag highlight">Game Jam</span>
@@ -844,16 +861,24 @@
     <!-- EA Game Jam -->
     <div class="project-card fade-in">
       <div class="project-media">
-        <!-- PLACEHOLDER: Replace with your screenshot image -->
-        <!-- Example: <img src="images/out-of-reach.jpg" alt="Out Of Reach"> -->
-        <div class="placeholder-media">
-          <div class="placeholder-icon">🖼</div>
-          <div class="placeholder-text">
-            <strong>Image Placeholder</strong>
-            Replace with screenshot
-          </div>
-        </div>
-      </div>
+          <a href="https://youtu.be/OLCgXAquUxs" target="_blank" style="position: relative; display: flex; align-items: center; justify-content: center; height: 100%; text-decoration: none;">
+            <img
+              src="https://img.youtube.com/vi/OLCgXAquUxs/maxresdefault.jpg"
+              alt="Matrix Shader"
+              style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block;"
+            />
+            <div style="
+              position: absolute;
+              inset: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 3rem;
+              color: white;
+              background: rgba(0, 0, 0, 0.4);
+            ">▶</div>
+          </a>
+    </div>
       <div class="project-info">
         <div class="project-meta">
           <span class="project-tag highlight">Game Jam</span>
@@ -987,39 +1012,38 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <div class="contact-section" id="contact">
-    <div class="contact-inner">
-      <div>
-        <h2 class="contact-heading">Let's build something <em>great</em> together.</h2>
-        <p class="contact-sub">Open to graphics engineering, XR development, and rendering roles. Based in Seattle, WA — Canadian citizen on TN Visa.</p>
-      </div>
-      <div class="contact-links">
-        <a href="mailto:hasansuleman1@gmail.com" class="contact-link">
-          <div class="contact-link-icon">✉</div>
-          <div>
-            <div class="contact-link-label">Email</div>
-            <div class="contact-link-value">hasansuleman1@gmail.com</div>
-          </div>
-        </a>
-        <a href="https://github.com/hasansuleman1" target="_blank" class="contact-link">
-          <div class="contact-link-icon">⌥</div>
-          <div>
-            <div class="contact-link-label">GitHub</div>
-            <div class="contact-link-value">github.com/hasansuleman1</div>
-          </div>
-        </a>
-        <!-- PLACEHOLDER: Add your LinkedIn URL below -->
-        <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank" class="contact-link">
-          <div class="contact-link-icon">in</div>
-          <div>
-            <div class="contact-link-label">LinkedIn</div>
-            <div class="contact-link-value">Update with your LinkedIn URL</div>
-          </div>
-        </a>
-      </div>
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-heading">Let's build something <em>great</em> together.</h2>
+      <p class="contact-sub">Open to graphics engineering, XR development, and rendering roles. Based in Seattle, WA — Canadian citizen on TN Visa.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:hasansuleman1@gmail.com" class="contact-link">
+        <div class="contact-link-icon" style="color: var(--text-link);">✉</div>
+        <div>
+          <div class="contact-link-label" style="color: var(--text-link);">Email</div>
+          <div class="contact-link-value" style="color: var(--text-link);">hasansuleman1@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://github.com/hasansuleman1" target="_blank" class="contact-link">
+        <div class="contact-link-icon" style="color: var(--text-link);">⌥</div>
+        <div>
+          <div class="contact-link-label" style="color: var(--text-link);">GitHub</div>
+          <div class="contact-link-value" style="color: var(--text-link);">github.com/hasansuleman1</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/hasan-syed-a34a334a/" target="_blank" class="contact-link">
+        <div class="contact-link-icon" style="color: var(--text-link);">in</div>
+        <div>
+          <div class="contact-link-label" style="color: var(--text-link);">LinkedIn</div>
+          <div class="contact-link-value" style="color: var(--text-link);">Hasan Syed</div>
+        </div>
+      </a>
     </div>
   </div>
+</div>
 
   <!-- FOOTER -->
   <footer>
